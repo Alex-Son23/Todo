@@ -9,14 +9,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # print(options)
-        TodoUser.objects.create_superuser(username='admin', email='admin@admin.admin', password='123')
+        # TodoUser.objects.create_superuser(username='admin', email='admin@admin.admin', password='123')
         for i in range(5):
             user_name = get_random_string(10)
+            first_name = get_random_string(15)
+            last_name = get_random_string(10)
             email = f'{get_random_string(10)}@{get_random_string(5)}.{get_random_string(3)}'
             print(f'{user_name}\n{email}')
 
             TodoUser.objects.create_user(
                 username=user_name,
+                first_name=first_name,
+                last_name=last_name,
                 email=email,
                 password='123'
             )
