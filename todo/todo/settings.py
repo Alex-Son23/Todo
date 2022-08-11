@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
+
     #main
     'rest_framework',
     'authapp',
@@ -51,7 +53,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://192.168.1.35:3000",
+]
+
 
 ROOT_URLCONF = 'todo.urls'
 

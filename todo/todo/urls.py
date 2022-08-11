@@ -19,7 +19,7 @@ from rest_framework.routers import DefaultRouter
 from authapp.views import TodoUserModelViewSet
 
 router = DefaultRouter()
-router.register('TodoUser', TodoUserModelViewSet)
+router.register('users', TodoUserModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
