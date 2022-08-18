@@ -1,4 +1,5 @@
 import React from "react";
+import {Outlet} from "react-router-dom";
 
 
 const UserItem = ({user}) => {
@@ -8,10 +9,10 @@ const UserItem = ({user}) => {
                 {user.username}
             </td>
             <td>
-                {user.first_name}
+                {user.firstName}
             </td>
             <td>
-                {user.last_name}
+                {user.lastName}
             </td>
             <td>
                 {user.email}
@@ -22,21 +23,24 @@ const UserItem = ({user}) => {
 
 const UsersList = ({users}) => {
     return (
-        <table>
-            <th>
-                Username
-            </th>
-            <th>
-                First name
-            </th>
-            <th>
-                Last name
-            </th>
-            <th>
-                Email
-            </th>
-            {users.map((user) => <UserItem user={user}/>)}
-        </table>
+        <div>
+            <table>
+                <th>
+                    Username
+                </th>
+                <th>
+                    First name
+                </th>
+                <th>
+                    Last name
+                </th>
+                <th>
+                    Email
+                </th>
+                {users.map((user) => <UserItem user={user}/>)}
+            </table>
+            {/*<Outlet/>*/}
+        </div>
     )
 }
 
