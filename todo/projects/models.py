@@ -21,4 +21,4 @@ class Todo(models.Model):
     user = models.ForeignKey(TodoUser, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['id']
+        ordering = ['-id']

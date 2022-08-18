@@ -2,20 +2,23 @@ from rest_framework import serializers
 from rest_framework.relations import StringRelatedField
 from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer
 
+from authapp.serializers import TodoUserModelSerializer
 from projects.models import Project, Todo
 
 
 class ProjectModelSerializer(HyperlinkedModelSerializer):
-    # users = StringRelatedField(many=True)
+    users = StringRelatedField(many=True)
+    # users = TodoUserModelSerializer()
 
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = ('id', 'name', 'url', 'users', )
 
 
 class TodoModelSerializer(HyperlinkedModelSerializer):
     # user = serializers.StringRelatedField(many=True)
     # project = StringRelatedField()
+    user = TodoUserModelSerializer()
     created = serializers.DateTimeField(format='%Y-%m-%d')
     updated = serializers.DateTimeField(format='%Y-%m-%d')
 
