@@ -5,21 +5,15 @@ import UsersList from "./components/users";
 import axios from "axios";
 import MenuList from "./components/menu";
 import FooterList from "./components/footer";
-import {BrowserRouter, HashRouter, Link, Navigate, Route, Routes} from "react-router-dom";
-import ProjectList from "./components/projects";
+import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+import {ProjectList,ProjectDetail} from "./components/projects";
 import TodoList from "./components/todo";
 import NotFound404 from "./components/NotFound404";
 import Project from "./components/project";
+import project from "./components/project";
 
-
-
-const PageNotFound = () => {
-    return (
-        <div>
-            <h1>Страница по адресу '{this.location.pathname}' не найдена</h1>
-        </div>
-    )
-}
+const DOMAIN = 'http://127.0.0.1:8000/api/'
+const get_url = (url) => `${DOMAIN}${url}`
 
 
 class App extends React.Component {
@@ -28,14 +22,55 @@ class App extends React.Component {
     this.state = {
         'users': [],
         'projects': [],
+        'project': [],
         'todos': [],
+        'func': function (){},
     }
   }
 
+  // getProject(id) {
+  //     // console.log(get_url(`project/${id}`))
+  //       axios.get(get_url(`project/${id}`))
+  //           .then(response => {
+  //               const project = response.data
+  //               console.log(project)
+  //               this.setState(
+  //                   {
+  //                       'project': project,
+  //                   }
+  //               )
+  //           }).catch(error => console.log(error))
+  // }
+
+
+
   componentDidMount() {
-    axios.get('http://127.0.0.1:8000/api/users/')
+
+      function getProject(id) {
+          axios.get(get_url(`project/${id}`))
+                .then(response => {
+                    const project = response.data
+                    console.log(project)
+                    // this.setState(
+                    //     {
+                    //         'project': project,
+                    //     }
+                    // )
+                    return 'hllo wrol'
+                }).catch(error => console.log(error))
+          // console.log(project)
+      }
+
+      this.setState(
+          {
+              'func': getProject,
+          }
+      )
+      
+    axios.get(get_url('users/'))
         .then(response => {
             const users = response.data['results']
+            // console.log(users)
                 this.setState(
                     {
                         'users': users,
@@ -43,7 +78,7 @@ class App extends React.Component {
                 )
         }).catch(error => console.log(error))
 
-    axios.get('http://127.0.0.1:8000/api/todo/')
+    axios.get(get_url('todo/'))
         .then(response => {
             const todos = response.data['results']
                 this.setState(
@@ -53,7 +88,7 @@ class App extends React.Component {
                 )
         }).catch(error => console.log(error))
 
-    axios.get('http://127.0.0.1:8000/api/project/')
+    axios.get(get_url('project/'))
         .then(response => {
             const projects = response.data['results']
                 this.setState(
@@ -77,31 +112,28 @@ class App extends React.Component {
                             <Link to='/todos' className={'menu-but'}>Todos</Link>
                         </li>
                         <li>
-                            <Link to='/projects' className={'menu-but'}>Projects</Link>
+                            <Link to='/project' className={'menu-but'}>Projects</Link>
                         </li>
                     </ul>
                 </nav>
+
                 <Routes>
                     <Route exact path='/' element={<UsersList users={this.state.users}/>}/>
 
-                    {/*<Route path='/projects'>*/}
-                    {/*    <Route index element={<Project projects={this.state.projects}/>} />*/}
-                    {/*    <Route path=':productId' element={<ProjectList projects={this.state.projects}/>} />*/}
-                    {/*</Route>*/}
-
-                    <Route path='/projects'>
-                        <Route index element={<ProjectList projects={this.state.projects}/>} />
-                        <Route path='/projects:projectId' element={<Project projects={this.state.projects} /> } />
+                    <Route path='/project'>
+                        <Route index element={<ProjectList items={this.state.projects}/>} />
+                        {/*<Route path="/project/:id" element={<ProjectDetail getProject={(id) => this.getProject(id)} item={this.state.project}/>}/>*/}
+                        <Route path="/project/:id" element={<ProjectDetail getProject={(id) => this.state.func(id)} item={this.state.project}/>}/>
+                        {/*<Route path="/project/:id" element={<ProjectDetail getProject={this.getProject} item={this.state.project} func={this.}/>}/>*/}
                     </Route>
 
+                    {/*<Route path='/project' element={<ProjectList items={this.state.projects}/>} />*/}
+                    {/*<Route path="/project/:id" element={<Project projects={this.state.projects}/>}/>*/}
+
                     <Route exact path='/todos' element={<TodoList todos={this.state.todos}/>} />
-
-
-                    {/*<Route path='/project/:id'>*/}
-                    {/*    <Project project={this.state.projects}/>*/}
-                    {/*</Route>*/}
                     <Route path="*" element={<NotFound404/>}/>} />
                 </Routes>
+
             </BrowserRouter>
         </div>
     )

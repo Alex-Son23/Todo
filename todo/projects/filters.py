@@ -13,7 +13,8 @@ class ProjectFilter(filters.FilterSet):
 
 class TodoFilter(filters.FilterSet):
     # name = filters.CharFilter(lookup_expr='contains')
+    created = filters.DateFromToRangeFilter()
 
     class Meta:
         model = Todo
-        fields = ['created']
+        fields = ['project', 'created']
