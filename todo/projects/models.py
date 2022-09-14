@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.db import models
 from django.utils.timezone import now
 
@@ -10,6 +11,9 @@ class Project(models.Model):
     name = models.CharField(verbose_name='Name of project', max_length=64)
     url = models.URLField(verbose_name='URL to repository')
     users = models.ManyToManyField(TodoUser)
+
+    def __str__(self):
+        return f'{self.id} {self.name} {self.users} {self.url}'
 
 
 class Todo(models.Model):
