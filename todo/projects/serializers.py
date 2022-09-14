@@ -22,6 +22,7 @@ class TodoModelSerializer(HyperlinkedModelSerializer):
     user = TodoUserModelSerializer()
     created = serializers.DateTimeField(format='%Y-%m-%d')
     updated = serializers.DateTimeField(format='%Y-%m-%d')
+    # print(userz)
 
     class Meta:
         model = Todo

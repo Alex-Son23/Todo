@@ -12,7 +12,6 @@ from projects.filters import ProjectFilter, TodoFilter
 from projects.models import Project, Todo
 from projects.serializers import ProjectModelSerializer, TodoModelSerializer
 
-lol = Request
 # class OwnerOnly(BasePermission):
 #     def has_permission(self, request, view):
 #         # if request.user == request.project.id:
@@ -33,6 +32,7 @@ class ProjectModelViewSet(ModelViewSet):
     serializer_class = ProjectModelSerializer
     pagination_class = ProjectLimitOffsetPagination
     filterset_class = ProjectFilter
+    # print(queryset)
     # permission_classes = [OwnerOnly]
 
 

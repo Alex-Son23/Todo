@@ -20,6 +20,7 @@ class NoUnderscoreBeforeNumberCamelCaseJSONParser(CamelCaseJSONParser):
 class TodoUserCustomViewSet(mixins.ListModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.UpdateModelMixin,
+                            mixins.CreateModelMixin,
                             GenericViewSet):
     queryset = TodoUser.objects.all()
     serializer_class = TodoUserModelSerializer
