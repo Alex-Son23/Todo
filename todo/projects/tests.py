@@ -31,14 +31,15 @@ class TestProjectViewSet(TestCase):
         admin = TodoUser.objects.create_superuser(username='admin', email='admin@admin.com', password='123')
         client.login(username='admin', password='123')
         response = client.put(f'/api/project/{project.id}',
-                              {'name': project.name, 'url': 'хоть я тут и меняю значение, но когда я проверяю данные запроса мне выводит данные из переменной project', 'users': project.users}, follow=False)
+                              {'name': project.name,
+                               'url': 'хоть я тут и меняю значение, но когда я проверяю данные запроса мне выводит данные из переменной project',
+                               'users': project.users}, follow=True)
+
+
+
         # print(response.data, '2')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def tearDown(self) -> None:
         pass
-
-
-
-
