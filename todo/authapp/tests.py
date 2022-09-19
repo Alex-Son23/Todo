@@ -22,15 +22,13 @@ class TestTodoUserViewSet(APITestCase):
         # self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         response = self.client.put(f'{self.url}{1}',
-                                   {'username': 'hell', 'email': 'asd@user.email', 'password': 'user.password'},
-                                   follow=True)
-        print(response.data, '3')
+                                   {'username': 'hell', 'email': 'asd@user.email', 'password': 'user.password'})
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response = self.client.get(f'{self.url}')
-        print(response.data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # user = TodoUser.objects.get(id=user.id)
-        # self.assertEqual(user.username, 'hell')
+
+        user = TodoUser.objects.get(id=user.id)
+        self.assertEqual(user.username, 'hell')
 
     def tearDown(self) -> None:
         pass
