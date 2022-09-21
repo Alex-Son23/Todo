@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.db import models
 from django.utils.timezone import now
 
@@ -11,12 +12,17 @@ class Project(models.Model):
     url = models.URLField(verbose_name='URL to repository')
     users = models.ManyToManyField(TodoUser)
 
+    def __str__(self):
+        return f'{self.id} {self.name} {self.users} {self.url}'
+
 
 class Todo(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     text = models.TextField(max_length=1024)
     created = models.DateTimeField(verbose_name='создан', auto_now_add=True)
-    updated = models.DateTimeField(verbose_name='создан', auto_now=True)
-    # user = models.OneToOneField(TodoUser, on_delete=models.CASCADE)
+    updated = models.DateTimeField(verbose_name='изменён', auto_now=True)
+    is_active = models.BooleanField(default=True)
     user = models.ForeignKey(TodoUser, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['-id']
