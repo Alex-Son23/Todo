@@ -7,7 +7,7 @@ from projects.models import Project, Todo
 
 
 class ProjectModelSerializer(HyperlinkedModelSerializer):
-    users = StringRelatedField(many=True)
+    # users = StringRelatedField(many=True)
     # users = TodoUserModelSerializer()
 
     class Meta:

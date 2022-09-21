@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'drf_yasg',
+    'graphene_django',
 
     #main
     'rest_framework',
@@ -191,3 +192,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://192.168.1.35:3000",
 ]
+
+GRAPHENE = {
+    'SCHEMA': 'todo.schema.schema'
+}
