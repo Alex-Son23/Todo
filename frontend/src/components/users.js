@@ -1,5 +1,6 @@
 import React from "react";
 import {Outlet} from "react-router-dom";
+import backVideo from "../video/back.mp4"
 
 
 const UserItem = ({user}) => {
@@ -24,6 +25,14 @@ const UserItem = ({user}) => {
 const UsersList = ({users}) => {
     return (
         <div>
+            {/*<svg height={"100%"} width={"100%"}>*/}
+            {/*    <clipPath id={"text-overlay"}>*/}
+            {/*        <text x={"50%"} y={"50%"} fill={"red"} textAnchor={"middle"}>*/}
+            {/*            Relax.*/}
+            {/*        </text>*/}
+            {/*    </clipPath>*/}
+            {/*</svg>*/}
+            {/*<video src={backVideo} autoPlay={true} loop={true} muted={true}></video>*/}
             <table>
                 <th>
                     Username

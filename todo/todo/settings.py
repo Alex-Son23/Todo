@@ -65,8 +65,6 @@ MIDDLEWARE = [
 ]
 
 
-
-
 ROOT_URLCONF = 'todo.urls'
 
 TEMPLATES = [
@@ -190,8 +188,14 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://192.168.1.35:3000",
+    "http://192.168.0.134:3000",
+    "http://127.0.0.1:8000"
 ]
+
+# CORS_ORIGIN_WHITELIST = ('http://localhost:3000')
+
+# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 GRAPHENE = {
     'SCHEMA': 'todo.schema.schema'

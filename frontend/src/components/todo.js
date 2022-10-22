@@ -1,7 +1,9 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 
-const Todo = ({todo}) => {
+const Todo = ({todo, deleteTodo}) => {
+    // console.log(todo.id)
     let activeTodo = ''
     if (todo.isActive){
         activeTodo = 'Active'
@@ -10,45 +12,33 @@ const Todo = ({todo}) => {
     }
     return (
         <tr>
+            <td>{todo.text}</td>
+            <td>{todo.created}</td>
+            <td>{activeTodo}</td>
+            <td>{todo.project}</td>
+            <td>{todo.user}</td>
             <td>
-                {todo.text}
-            </td>
-            <td>
-                {todo.created}
-            </td>
-            <td>
-                {activeTodo}
-            </td>
-            <td>
-                {todo.project}
-            </td>
-            <td>
-                {todo.user.username}
+                <button onClick={()=>deleteTodo(todo.id)} type='button'>Delete</button>
             </td>
         </tr>
     )
 }
 
-const TodoList = ({todos}) => {
+const TodoList = ({todos, deleteTodo}) => {
+    // console.log(deleteTodo)
     return (
-        <table>
-            <th>
-                Text
-            </th>
-            <th>
-                Created
-            </th>
-            <th>
-                Active
-            </th>
-            <th>
-                Project
-            </th>
-            <th>
-                User
-            </th>
-            {todos.map((todo) => <Todo todo={todo}/>)}
-        </table>
+        <div>
+            <table>
+                <th>Text</th>
+                <th>Created</th>
+                <th>Active</th>
+                <th>Project</th>
+                <th>User</th>
+                <th></th>
+                {todos.map((todo) => <Todo todo={todo} deleteTodo={deleteTodo}/>)}
+            </table>
+            <Link className="create-but" to='/todos/create'>Create</Link>
+        </div>
     )
 }
 

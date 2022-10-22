@@ -12,11 +12,6 @@ class NoUnderscoreBeforeNumberCamelCaseJSONParser(CamelCaseJSONParser):
     json_underscoreize = {'no_underscore_before_number': True}
 
 
-# class TodoUserModelViewSet(ModelViewSet):
-#     queryset = TodoUser.objects.all()
-#     serializer_class = TodoUserModelSerializer
-#     parser_classes = (NoUnderscoreBeforeNumberCamelCaseJSONParser, parsers.MultiPartParser, parsers.JSONParser)
-
 class TodoUserCustomViewSet(mixins.ListModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.UpdateModelMixin,
@@ -27,6 +22,6 @@ class TodoUserCustomViewSet(mixins.ListModelMixin,
     parser_classes = (NoUnderscoreBeforeNumberCamelCaseJSONParser, parsers.MultiPartParser, parsers.JSONParser)
 
     def get_serializer_class(self):
-        if self.request.version == '2.0':
+        if self.request.method in ["GET"]:
             return TodoUserCustomModelSerializer
         return TodoUserModelSerializer

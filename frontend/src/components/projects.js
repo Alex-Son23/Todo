@@ -1,9 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link,useParams} from "react-router-dom";
 
-
-const ProjectListItem = ({item}) => {
-    // console.log(item)
+const ProjectListItem = ({item, deleteProject}) => {
     let link_to = `/project/${item.id}`
     return (
         <tr>
@@ -11,50 +9,71 @@ const ProjectListItem = ({item}) => {
             <td>{item.name}</td>
             <td>{item.url.slice(0,20)+'...'}</td>
             <td><Link to={link_to}>Detail</Link></td>
+            <td><button onClick={()=>deleteProject(item.id)} type='button'>Delete</button></td>
         </tr>
     )
 }
 
-const ProjectList = ({items}) => {
-    console.log(items)
+const ProjectList = ({items, deleteProject}) => {
+    const [filteredProjects, setFilteredProjects] = useState(items)
+    // console.log(filteredProjects)
+    const filterProjectsByName = (e) => {
+        if (e.target.value !== ''){
+            const filteredProjects = items.filter(item => item.name.toLowerCase().includes(e.target.value))
+            // console.log(filteredProjects)
+            setFilteredProjects(filteredProjects)
+        }else{
+            setFilteredProjects(items)
+        }
+    }
     return (
-        <table className="table">
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Repository</th>
-                <th></th>
-            </tr>
-            {items.map((item) => <ProjectListItem item={item}/>)}
-        </table>
+        <div className="container-md">
+            <form>
+                <label htmlFor="projectFilter">
+                    Фильтрация по названию
+                </label>
+                <input className="form-control" type="text" aria-label="projectFilter" onChange={event => {filterProjectsByName(event)}}>
+
+                </input>
+            </form>
+
+            <table className="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Repository</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {filteredProjects.map((item) => <ProjectListItem item={item} deleteProject={deleteProject}/>)}
+            </table>
+            <Link className="create-but" to='/project/create'>Create</Link>
+        </div>
     )
 }
 
 const ProjectUserItem = ({user}) => {
     return (
-        <li>
-            {user.username} ({user.email})
+        <li style={{display:"block"}}>
+            {user}
         </li>
     )
 }
 
-const ProjectDetail = ({getProject, item}) => {
-    // console.log(typeof getProject, item)
+const ProjectDetail = ({projects}) => {
     let { id } = useParams();
-    let proj = getProject(id)
-    console.log(proj)
-    let users = item.users ? item.users : []
+    let item
+    projects.map(project => {if(project.id == id) item = project})
     return (
-        <div>
+        <div className={"detail"}>
             <h1>{item.name}</h1>
-            Repository: <a href={item.repository}>{item.repository}</a>
+            Repository: <a href={item.url}>{item.url}</a>
             <p></p>
             Users:
-            <ol>
-                {typeof item.users}
-
-            {/*{item.users.map((user) => <ProjectUserItem user={user} />)}*/}
-            </ol>
+            <ul>
+            {item.users.map((user) => <ProjectUserItem user={user}/>)}
+            </ul>
+            <Link className="edit-but" to={`/project/edit/${id}`}>Edit</Link>
         </div>
     )
 }

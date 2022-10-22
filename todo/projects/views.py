@@ -12,6 +12,11 @@ from projects.filters import ProjectFilter, TodoFilter
 from projects.models import Project, Todo
 from projects.serializers import ProjectModelSerializer, TodoModelSerializer
 
+from projects.serializers import GetProjectModelSerializer
+
+from projects.serializers import GetTodoModelSerializer
+
+
 # class OwnerOnly(BasePermission):
 #     def has_permission(self, request, view):
 #         # if request.user == request.project.id:
@@ -32,8 +37,14 @@ class ProjectModelViewSet(ModelViewSet):
     serializer_class = ProjectModelSerializer
     pagination_class = ProjectLimitOffsetPagination
     filterset_class = ProjectFilter
+
     # print(queryset)
     # permission_classes = [OwnerOnly]
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return GetProjectModelSerializer
+        return ProjectModelSerializer
 
 
 class TodoModelViewSet(ModelViewSet):
@@ -51,3 +62,8 @@ class TodoModelViewSet(ModelViewSet):
         else:
             return Response(status=status.HTTP_204_NO_CONTENT)
         # return Response(status=status.HTTP_100_CONTINUE)
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return GetTodoModelSerializer
+        return TodoModelSerializer

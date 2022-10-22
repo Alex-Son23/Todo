@@ -6,7 +6,7 @@ from authapp.serializers import TodoUserModelSerializer
 from projects.models import Project, Todo
 
 
-class ProjectModelSerializer(HyperlinkedModelSerializer):
+class ProjectModelSerializer(ModelSerializer):
     # users = StringRelatedField(many=True)
     # users = TodoUserModelSerializer()
 
@@ -16,15 +16,29 @@ class ProjectModelSerializer(HyperlinkedModelSerializer):
         # fields = '__all__'
 
 
-class TodoModelSerializer(HyperlinkedModelSerializer):
-    # user = serializers.StringRelatedField(many=True)
-    # project = StringRelatedField()
-    user = TodoUserModelSerializer()
-    created = serializers.DateTimeField(format='%Y-%m-%d')
-    updated = serializers.DateTimeField(format='%Y-%m-%d')
-    # print(userz)
+class GetProjectModelSerializer(ModelSerializer):
+    users = StringRelatedField(many=True)
+    # users = TodoUserModelSerializer()
+
+    class Meta:
+        model = Project
+        fields = ('id', 'name', 'url', 'users', )
+
+
+class TodoModelSerializer(ModelSerializer):
 
     class Meta:
         model = Todo
         # fields = '__all__'
-        fields = ('url', 'text', 'created', 'updated', 'is_active', 'project', 'user',)
+        fields = ('text', 'user', 'project', )
+
+
+class GetTodoModelSerializer(HyperlinkedModelSerializer):
+    user = StringRelatedField()
+    created = serializers.DateTimeField(format='%Y-%m-%d')
+    updated = serializers.DateTimeField(format='%Y-%m-%d')
+
+    class Meta:
+        model = Todo
+        # fields = '__all__'
+        fields = ('id', 'url', 'text', 'created', 'updated', 'is_active', 'project', 'user',)
