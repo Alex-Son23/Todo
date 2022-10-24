@@ -90,3 +90,74 @@ footer ul{
   padding: 21px;
   margin: 0;
 }
+
+.create-but{
+  display: block;
+  text-align: center;
+  width:100px;
+  /*height: 75px;*/
+  color: black;
+  border-radius: 20px;
+  text-decoration: none;
+  border: 1px solid black;
+  background-color: #61dafb;
+  margin: 0 auto;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+form {
+  display: block;
+  width: 181px;
+  margin: 0 auto;
+}
+
+form .form-group{
+  margin-top: 10px;
+}
+
+form .form-group label{
+  font-family: "Roboto", Sans-Serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+form .mybut{
+  display: block;
+  margin: 10px auto 0;
+  background-color: #61dafb;
+  border: 1px solid black;
+  border-radius: 20px;
+  font-size: 20px;
+  font-family: "Roboto", Sans-Serif;
+  font-weight: bold;
+  width: 75px;
+}
+
+.edit-but{
+  display: block;
+  text-align: center;
+  width:100px;
+  color: black;
+  border-radius: 20px;
+  text-decoration: none;
+  border: 1px solid black;
+  background-color: #61dafb;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+video{
+  width: 100%;
+  height: 100%;
+  clip-path: url(#text-overlay);
+}
+
+svg {
+  font-weight:bold;
+  font-size: 8em;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+  db:
+    env_file:
+      - .env
+    image: postgres:13.1
+    container_name: 'postgres_database'
+    privileged: true
+    restart: always
+    volumes:
+      - data-psql:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+  backend:
+    container_name: 'backend_django'
+#    build:
+#      context: ./todo
+    image: backend_django:1.0.0
+    ports:
+      - 8000:8080
+    command: bash -c "python manage.py migrate && gunicorn todo.wsgi -b 0.0.0.0:8080"
+    depends_on:
+      - db
+  nginx:
+#    build: ./nginx
+    container_name: 'backend_nginx'
+    image: backend_nginx:1.0.0
+    ports:
+      - 8080:80
+    depends_on:
+      - backend
+  frontend:
+#    build: ./frontend
+    container_name: 'frontend_react'
+    image: frontend_react:1.0.0
+    ports:
+      - 80:80
+    depends_on:
+      - nginx
+
+volumes:
+  data-psql:
